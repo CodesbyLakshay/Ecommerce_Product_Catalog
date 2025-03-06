@@ -7,7 +7,7 @@ function App() {
 
   return (
    <div>
-
+<button type="button" class="btn-close" aria-label="Close"></button>
    </div>
   )
 }
