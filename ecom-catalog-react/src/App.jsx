@@ -1,5 +1,6 @@
 import { useEffect,useState } from 'react';
 import ProductList from './ProductList';
+import CategoryFilter from './CategoryFilter';
 import './App.css'
 
 function App() {
@@ -28,16 +29,37 @@ const handleSortChange = (event) => {
     setSortOrder(event.target.value)
 };
 
+const handleCategorySelect = (categoryId) => {
+    setSelectedCategory(categoryId ? Number(categoryId): null);
+};
+
+const filteredProducts = products
+           .filter(product => {
+               return(
+                   (selectedCategory ? product.category?.id === selectedCategory  : true)
+                   &&
+                   product.name.toLowerCase().includes(searchTerm.toLowerCase())
+                   )
+               })
+           .sort((a,b) => {
+               if(sortOrder=== "asc"){
+                   return a.price -b.price;
+                   } else{
+                       return b.price - a.price
+                       }
+               });
+
 
   return (
    <div className='container'>
        <h1 className='my-4'>Product Catalog</h1>
 
 
-       <div className='row align-items-centre mb-4'>
-           <div className='call-md-3 col-sm-12 mb-2'>
-               <p>Category Filter</p>
-           </div>
+       <div className='row mb-2'>
+           <div className='call-md-5 col-sm-12 mb-2'>
+                          <CategoryFilter categories={categories} onSelect={handleCategorySelect}  />
+                   </div>
+
            <div className='col-md-5 col-sm-12 md-2'>
             <input
             type='text'
@@ -54,9 +76,9 @@ const handleSortChange = (event) => {
         </div>
        </div>
        <div>
-           {products.length ? (
+           {filteredProducts.length ? (
                //display products
-               <ProductList products={products} />
+               <ProductList products={filteredProducts} />
                ) : (
                <p>No products found</p>)}
        </div>
