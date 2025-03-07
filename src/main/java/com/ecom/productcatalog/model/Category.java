@@ -1,5 +1,6 @@
 package com.ecom.productcatalog.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -18,5 +19,6 @@ public class Category {
                cascade = CascadeType.ALL,
                fetch = FetchType.LAZY)
     @JsonManagedReference
+    @JsonIgnore
     private Set<Product> products;
 }
