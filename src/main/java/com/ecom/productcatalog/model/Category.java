@@ -1,9 +1,11 @@
 package com.ecom.productcatalog.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
+import org.hibernate.Hibernate;
 
 import java.util.Set;
 
@@ -21,4 +23,6 @@ public class Category {
     @JsonManagedReference
     @JsonIgnore
     private Set<Product> products;
+
+
 }
